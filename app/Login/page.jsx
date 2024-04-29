@@ -1,5 +1,6 @@
-import React from 'react';
+"use-client";
 import TopNavbar from "../components/topNavbar";
+
 
 export default function page() {
   return (
