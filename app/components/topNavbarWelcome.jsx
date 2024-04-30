@@ -24,6 +24,7 @@ export default function TopNavbar() {
         quality={100}
         style={{ filter: "brightness(100%)" }}
       />
+      {/* <div className='text-[#AD773D] font-bold text-5xl absolute z-10 right-28 top-16'>Atma Kitchen</div> */}
       <div className="flex justify-between w-full items-center bg-[#171832] h-20 absolute top-8 z-10 opacity-80"></div>
       <IoMdArrowRoundBack
         size={40}
