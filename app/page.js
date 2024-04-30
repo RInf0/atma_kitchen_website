@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNavbar from "./components/topNavbar";
+import TopNavbar from "./components/topNavbarWelcome";
 import Card from "./components/card";
 
 export default function Home() {
