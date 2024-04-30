@@ -6,30 +6,32 @@ export default function page() {
     <>
       <TopNavbar />
       <div className="flex justify-center items-center h-screen">
-        <div className="bg-white rounded-3xl p-8 md:w-[60rem] h-[30rem]">
+        <div className="bg-white rounded-3xl p-8 mt-40 md:w-[50rem] h-[24rem] bg-opacity-70">
           <div className="bg-[#AD773D]"></div>
-          <h1 className="text-[#AD773D] font-bold font-serif text-center mb-4 text-2xl">REGISTER</h1>
-          <hr />
-          <p className="text-[#171832] font-normal font-serif text-center mb-8">WELCOME<br/>Help us fill in your undefined</p>
+          <h1 className="text-[#AD773D] font-bold font-serif text-center mb-0.5 text-3xl">REGISTER</h1>
+          <hr style={{ borderWidth: '1.5px' }} />
+          <p className="text-[#171832] font-serif text-center mt-1" style={{ fontSize: '16px' }}>
+            WELCOME</p>
+          <p className="text-[#171832] font-serif text-center mb-6" style={{ fontSize: '12px' }}>Help us fill in your undefined</p>
           <form action="#" method="POST">
-            <div className="mb-4 grid grid-cols-3 gap-4">
-                <input type="name" placeholder="Enter your full name" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black"/>
-                <input type="email" placeholder="Enter your email" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black"/>
-                <input type="num" placeholder="Enter your number" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black"/>
+            <div className="mb-4 grid grid-cols-3 gap-4" >
+              <input type="name" placeholder="Enter your full name" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black" style={{ borderRadius: '20px' }} />
+              <input type="email" placeholder="Enter your email" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black" style={{ borderRadius: '20px' }} />
+              <input type="num" placeholder="Enter your number" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black" style={{ borderRadius: '20px' }} />
             </div>
             <div className="mb-4 grid grid-cols-2 gap-4">
-                <input type="createPass" placeholder="Create your password" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black"/>
-                <input type="confirmPass" placeholder="Confirm your password" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black"/>
+              <input type="createPass" placeholder="Create your password" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black" style={{ borderRadius: '20px' }} />
+              <input type="confirmPass" placeholder="Confirm your password" className="col-span-1 p-2 rounded-2xl bg-[#AD773D] backdrop-blur-md placeholder-slate-950 text-black" style={{ borderRadius: '20px' }} />
             </div>
             <button
+              style={{ marginLeft: '20%' }}
               type="submit"
-              class="w-96 mx-64 bg-[#011145] hover:bg-[#01071b] text-[#AD773D] font-bold font-serif py-3 px-4 rounded-2xl transition duration-300"
-            >
+              className="bg-[#171832] text-white  py-2 px-4 rounded-full w-full md:w-[27rem] ">
               Register
             </button>
           </form>
-          <p class="text-center text-black mt-6">
-            Already have an account? <a href="#" class="text-[#AD773D] hover:teks-[#AD773D]">Login</a>
+          <p className="text-center text-black mt-3" style={{ fontSize: '14px' }}>
+            Already have an account? <a href="#" className="text-[#AD773D] hover:teks-[#AD773D] " style={{ fontSize: '14px' }}>Login</a>
           </p>
         </div>
       </div>
