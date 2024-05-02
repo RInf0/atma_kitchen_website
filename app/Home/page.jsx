@@ -2,17 +2,25 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "../assets/images/logo.png";
+import Bg from "../assets/images/bg.png";
 import TopNavbar from "../components/topNavbarHome";
 
 export default function Page() {
     return (
         <>
+        <div className="absolute inset-0 bg-cover bg-center overflow-hidden object-fill" style={{
+      backgroundImage: `url(${Bg.src})`,
+      width: '100%',
+      height: '100%',
+    }}/>
             <TopNavbar />
-            <Image
-                src={Logo}
-                alt="Logo"
-                className="absolute z-10 left-1/3 top-1/4"
-            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <Image
+                    src={Logo}
+                    alt="Logo"
+                    width={400}
+                />
+            </div>
             <div className="container w-full mt-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="md:order-2">

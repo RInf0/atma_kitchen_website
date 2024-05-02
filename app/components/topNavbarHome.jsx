@@ -11,7 +11,7 @@ export default function Page() {
 
     return (
         <div className="relative w-full h-screen">
-            <div className="absolute inset-0 z-0">
+            {/* <div className="absolute inset-0 z-0">
                 <Image
                     src={Bg}
                     alt="Background"
@@ -21,7 +21,7 @@ export default function Page() {
                     quality={100}
                     style={{ filter: "brightness(100%)" }}
                 />
-            </div>
+            </div> */}
             <div className="bg-[#171832] opacity-80 h-20 absolute top-8 w-full z-10" />
             <div className="absolute z-10 left-10 top-0">
                 <Image
