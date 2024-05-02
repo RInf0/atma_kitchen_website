@@ -26,6 +26,14 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.background {
+  background-image: url("assets/images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
