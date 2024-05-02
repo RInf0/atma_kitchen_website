@@ -30,14 +30,14 @@ export default function Page() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="bg-[#AD773D] placeholder-white py-2 px-4 rounded-full w-full md:w-[23rem] flex justify-between items-center"
+                className="bg-[#AD773D] placeholder-slate-950 text-black py-2 px-4 rounded-full w-full md:w-[23rem] flex justify-between items-center"
               />
             </div>
             <div className="flex justify-center mt-5 items-center relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                className="bg-[#AD773D] placeholder-white py-2 px-4 rounded-full w-full md:w-[23rem] pr-12" // Tambahkan pr-12 untuk memberikan ruang di sebelah kanan input untuk ikon mata
+                className="bg-[#AD773D] placeholder-slate-950 text-black py-2 px-4 rounded-full w-full md:w-[23rem] pr-12" // Tambahkan pr-12 untuk memberikan ruang di sebelah kanan input untuk ikon mata
               />
               <div className="absolute right-32 top-1/2 transform -translate-y-1/2">
                 {showPassword ? (
@@ -47,7 +47,6 @@ export default function Page() {
                 )}
               </div>
             </div>
-
             <div className="flex justify-center mt-5">
               <button className="bg-[#011145] hover:bg-[#01071b] text-[#AD773D] py-2 px-4 rounded-full w-96 h-14 ">
                 Login

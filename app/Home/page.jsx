@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "../assets/images/logo.png";
-import Bg from "../assets/images/bg.png";
 import TopNavbar from "../components/topNavbarHome";
 
 export default function Page() {
@@ -12,43 +11,30 @@ export default function Page() {
             <Image
                 src={Logo}
                 alt="Logo"
-                width={150}
-                height={200}
-                className="absolute z-10 left-20 top-0"
+                className="absolute z-10 left-1/3 top-1/4"
             />
-            <div className="container mx-auto mt-5">
+            <div className="container w-full mt-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="md:order-2">
-                        <h2 className="font-normal text-2xl mb-4">
-                            Hotel pertama dan satu-satunya{" "}
-                            <span className="font-semibold">yang fiksional</span>
-                        </h2>
                         <p className="text-lg">
-                            Diciptakan oleh{" "}
-                            <span className="font-semibold">[[Reyhan]]</span>, mahasiswa
-                            Universitas Atma Jaya Yogyakarta dari program Studi
-                            Informatika.
-                        </p>
-                        <p className="text-lg">
-                            Nomor Pokok Mahasiswa:{" "}
-                            <span className="font-semibold">[[210711212]]</span>
+                            Atma Kitchen adalah sebuah usaha baru di bidang kuliner,
+                            yang dimiliki oleh Bu Margareth Atma Negara, seorang selebgram
+                            yang sangat suka mencoba makanan yang sedang hits. Karena
+                            hobinya tersebut, Bu Margareth terinspirasi untuk membuat usaha
+                            di bidang kuliner, dimana ia akan menjual aneka kue premium,
+                            dan akan segara dibuka di Yogyakarta
                         </p>
                     </div>
                 </div>
-                <hr className="mt-5 mb-5" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h2 className="font-normal text-2xl mb-4">
-                            Your comfort is key,{" "}
-                            <span className="font-semibold">
-                                experience the heartbeat of our hotel
-                            </span>
-                            .
-                        </h2>
                         <p className="text-lg">
-                            Our modern, sophisticated guest rooms are designed to exceed
-                            expectations with premium comfort, technology where you need
-                            it, and thoughtful attention to detail.
+                            Atma Kitchen Menyajikan
+                            #Cake & sajian lezat untuk semua
+                            kalangan.
+                            Sejuta rasa untuk #BerbagiSemangat
+                            Bukan #TokoCake biasa
+                            Mampir & jadi #SahabatSejatiku
                         </p>
                     </div>
                 </div>
