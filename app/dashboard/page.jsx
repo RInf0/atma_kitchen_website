@@ -1,4 +1,4 @@
-const Page = () => {
+const Dashboard = () => {
   return (
     <>
       <h1>Welcome Admin</h1>
@@ -6,4 +6,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Dashboard;
