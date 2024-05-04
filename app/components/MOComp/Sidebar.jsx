@@ -25,34 +25,34 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/produk" passHref>
+            <Link href="/MO/jabatan" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <FaShoppingBag />
-                <span className="flex-1 ms-3 whitespace-nowrap">Produk</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Jabatan</span>
               </div>
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/resep" passHref>
+            <Link href="/MO/karyawan" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <FaReceipt />
-                <span className="flex-1 ms-3 whitespace-nowrap">Resep</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Karyawan</span>
               </div>
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/bahan_baku" passHref>
+            <Link href="/MO/data_penitip" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <FaClipboardList />
-                <span className="flex-1 ms-3 whitespace-nowrap">Bahan Baku</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Data Penitip</span>
               </div>
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/hampers" passHref>
+            <Link href="/MO/cat_bahan_baku" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <GiShoppingBag />
-                <span className="flex-1 ms-3 whitespace-nowrap">hampers</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">Catatan Pembelian Bahan Baku</span>
               </div>
             </Link>
           </li>
