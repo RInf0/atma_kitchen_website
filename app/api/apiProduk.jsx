@@ -28,7 +28,7 @@ export const ProdukCreate = async (formData) => {
       data: res.status,
     };
   } catch (error) {
-    return error.response.status;
+    return error.response.data;
   }
 };
 
@@ -41,7 +41,55 @@ export const ProdukUpdate = async (id, formData) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    return {
+      success: true,
+      data: res.status,
+    };
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const ProdukDelete = async (id) => {
+  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
+  try {
+    const res = await useClient.delete(`/produk/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const getProdukById = async (id) => {
+  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
+  try {
+    const res = await useClient.get(`/produk/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const searchProduk = async (search) => {
+  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
+  try {
+    const res = await useClient.get(`/produk/search/${search}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.data;
   } catch (error) {
     return error.response.data;
   }
