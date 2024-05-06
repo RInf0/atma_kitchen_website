@@ -95,6 +95,15 @@ export default function Page() {
                 </a>
               </p>
             </div>
+            <div className="flex justify-end">
+              <a 
+                href="newPassCustomer"
+                className="text-[#AD773D] font-serif text-right mt-1 mb-8 hover:teks-[#AD773D]"
+                style={{ fontSize: "14px" }}
+              >
+                Lupa Password
+              </a>
+            </div>
           </form>
         </div>
       </div>

@@ -61,7 +61,7 @@ const Produk = () => {
                 </h5>
               </a>
               <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                harga : {item.email_karyawan}
+                {item.email_karyawan}
               </p>
               <a
                 href="#"

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { KaryawanCreate } from "../../../api/apiKaryawan";
 
-const CreateProduk = () => {
+const CreateKaryawan = () => {
   const [istoast, setIstoast] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -19,13 +19,6 @@ const CreateProduk = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      image: e.target.files[0],
-    }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formDatatoSend = new FormData();
@@ -34,7 +27,7 @@ const CreateProduk = () => {
     formDatatoSend.append("no_telp", formData.no_telp);
     formDatatoSend.append("jumlah_bolos", formData.jumlah_bolos);
 
-    ProdukCreate(formDatatoSend).then((res) => {
+    KaryawanCreate(formDatatoSend).then((res) => {
       if (res.success) {
         setIstoast(true);
         setTimeout(() => {
@@ -238,4 +231,4 @@ const CreateProduk = () => {
   );
 };
 
-export default CreateProduk;
+export default KaryawanCreate;
