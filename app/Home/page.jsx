@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "../assets/images/logo.png";
-import Bg from "../assets/images/bg.png";
 import TopNavbar from "../components/topNavbarHome";
 import Vector from "../assets/images/Vector.png";
 import Footer from "../components/Footer";
@@ -13,7 +12,7 @@ import "../globals.css";
 
 export default function Page() {
   return (
-    <div className="background w-full">
+    <div className="background w-full overflow-y-scroll">
       <TopNavbar />
       <div className="container mx-auto w-full h-screen flex justify-center items-center">
         <div>

@@ -3,7 +3,7 @@ import Sidebar from "../components/adminComp/Sidebar";
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="bg-gray-900 h-svh">
+    <div className="bg-gray-900 min-h-svh">
       <Navbar />
       <Sidebar />
       <div className="p-4 sm:ml-64">

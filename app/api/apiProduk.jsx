@@ -1,4 +1,5 @@
 import useClient from ".";
+const token = localStorage.getItem("token");
 
 export const GetProduk = async () => {
   try {
@@ -14,12 +15,10 @@ export const GetProduk = async () => {
 };
 
 export const ProdukCreate = async (formData) => {
-  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
   try {
     const res = await useClient.post("/produk", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        // Authorization: `Bearer ${localStorage.getItem("token")}`,
         Authorization: `Bearer ${token}`,
       },
     });
@@ -33,7 +32,6 @@ export const ProdukCreate = async (formData) => {
 };
 
 export const ProdukUpdate = async (id, formData) => {
-  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
   try {
     const res = await useClient.post(`/produk/${id}`, formData, {
       headers: {
@@ -51,7 +49,6 @@ export const ProdukUpdate = async (id, formData) => {
 };
 
 export const ProdukDelete = async (id) => {
-  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
   try {
     const res = await useClient.delete(`/produk/${id}`, {
       headers: {
@@ -66,7 +63,6 @@ export const ProdukDelete = async (id) => {
 };
 
 export const getProdukById = async (id) => {
-  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
   try {
     const res = await useClient.get(`/produk/${id}`, {
       headers: {
@@ -81,7 +77,6 @@ export const getProdukById = async (id) => {
 };
 
 export const searchProduk = async (search) => {
-  const token = "54|xLFT8Rve8Nk0aBGlHNwyF8cvJalDgQNzc1v8AkIe1da597c7";
   try {
     const res = await useClient.get(`/produk/search/${search}`, {
       headers: {
