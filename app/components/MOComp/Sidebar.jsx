@@ -1,13 +1,28 @@
+"use client"
 import React from "react";
 import { MdDashboard } from "react-icons/md";
-import { FaShoppingBag } from "react-icons/fa";
-import { FaReceipt } from "react-icons/fa6";
-import { FaClipboardList } from "react-icons/fa";
-import { GiShoppingBag } from "react-icons/gi";
+import { FaUserCog } from "react-icons/fa";
+import { ImUserTie } from "react-icons/im";
+import { FaPeopleCarryBox } from "react-icons/fa6";
+import { SiMaterialdesignicons } from "react-icons/si";
+import { FaMoneyCheckAlt } from "react-icons/fa";
+import { FaArrowsDownToPeople } from "react-icons/fa6";
 import { FaSignOutAlt } from "react-icons/fa";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { logout } from "../../api/auth/auth";
 
 const Sidebar = () => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout().then((res) => {
+      console.log(res);
+      localStorage.removeItem("token");
+      localStorage.removeItem("abilities");
+      router.push("/Login");
+    });
+  };
   return (
     <aside
       id="logo-sidebar"
@@ -27,7 +42,7 @@ const Sidebar = () => {
           <li>
             <Link href="/MO/jabatan" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FaShoppingBag />
+                <FaUserCog />
                 <span className="flex-1 ms-3 whitespace-nowrap">Jabatan</span>
               </div>
             </Link>
@@ -35,7 +50,7 @@ const Sidebar = () => {
           <li>
             <Link href="/MO/karyawan" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FaReceipt />
+                <ImUserTie />
                 <span className="flex-1 ms-3 whitespace-nowrap">Karyawan</span>
               </div>
             </Link>
@@ -43,7 +58,7 @@ const Sidebar = () => {
           <li>
             <Link href="/MO/data_penitip" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FaClipboardList />
+                <FaPeopleCarryBox />
                 <span className="flex-1 ms-3 whitespace-nowrap">Data Penitip</span>
               </div>
             </Link>
@@ -51,18 +66,34 @@ const Sidebar = () => {
           <li>
             <Link href="/MO/cat_bahan_baku" passHref>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <GiShoppingBag />
-                <span className="flex-1 ms-3 whitespace-nowrap">Catatan Pembelian Bahan Baku</span>
+                <SiMaterialdesignicons />
+                <span className="flex-1 ms-3 whitespace-nowrap text-wrap">Pencatatan Pembelian Bahan Baku</span>
               </div>
             </Link>
           </li>
           <li>
-            <Link href="/Welcome" passHref>
+            <Link href="/MO/cat_pengeluaran_lain" passHref>
+              <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FaMoneyCheckAlt />
+                <span className="flex-1 ms-3 whitespace-nowrap text-wrap">Pencatatan Pengeluaran Lain</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+            <Link href="/MO/data_presensi" passHref>
+              <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FaArrowsDownToPeople />
+                <span className="flex-1 ms-3 whitespace-nowrap text-wrap">Data Presensi</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+          <button onClick={handleLogout}>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <FaSignOutAlt />
                 <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
               </div>
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

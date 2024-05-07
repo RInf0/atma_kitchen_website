@@ -1,9 +1,9 @@
 import useClient from ".";
 const token = localStorage.getItem("token");
 
-export const GetKaryawan = async () => {
+export const GetResep = async () => {
   try {
-    const res = await useClient.get("/karyawan", {
+    const res = await useClient.get("/resep", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -15,9 +15,9 @@ export const GetKaryawan = async () => {
   }
 };
 
-export const KaryawanCreate = async (formData) => {
+export const ResepCreate = async (formData) => {
   try {
-    const res = await useClient.post("/karyawan", formData, {
+    const res = await useClient.post("/resep", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
@@ -32,12 +32,11 @@ export const KaryawanCreate = async (formData) => {
   }
 };
 
-export const KaryawanUpdate = async (id, formData) => {
+export const ResepUpdate = async (id, formData) => {
   try {
-    const res = await useClient.put(`/karyawan/${id}`, formData, {
+    const res = await useClient.post(`/resep/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
@@ -50,9 +49,9 @@ export const KaryawanUpdate = async (id, formData) => {
   }
 };
 
-export const KaryawanDelete = async (id) => {
+export const ResepDelete = async (id) => {
   try {
-    const res = await useClient.delete(`/karyawan/${id}`, {
+    const res = await useClient.delete(`/resep/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -64,9 +63,9 @@ export const KaryawanDelete = async (id) => {
   }
 };
 
-export const getKaryawanById = async (id) => {
+export const getResepById = async (id) => {
   try {
-    const res = await useClient.get(`/karyawan/${id}`, {
+    const res = await useClient.get(`/resep/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -78,9 +77,9 @@ export const getKaryawanById = async (id) => {
   }
 };
 
-export const searchKaryawan = async (search) => {
+export const searchResep = async (search) => {
   try {
-    const res = await useClient.get(`/karyawan/search/${search}`, {
+    const res = await useClient.get(`/resep/search/${search}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

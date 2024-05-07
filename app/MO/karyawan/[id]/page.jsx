@@ -1,18 +1,29 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { KaryawanCreate } from "../../../api/apiKaryawan";
-
+import React, { useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { useState } from "react";
+import { KaryawanUpdate, getKaryawanById } from "../../../api/apiKaryawan";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CreateKaryawan = () => {
+const editKaryawan = () => {
   const router = useRouter();
+  const param = useParams();
   const [formData, setFormData] = useState({
     nama_karyawan: "",
     email_karyawan: "",
     notelp_karyawan: "",
   });
+
+  useEffect(() => {
+    getKaryawanById(param.id).then((res) => {
+      setFormData({
+        nama_karyawan: res.nama_karyawan,
+        email_karyawan: res.email_karyawan,
+        notelp_karyawan: res.notelp_karyawan,
+      });
+    });
+  }, []);
 
   const handleChange = (e) => {
     setFormData((prevData) => ({
@@ -23,14 +34,10 @@ const CreateKaryawan = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formDatatoSend = new FormData();
-    formDatatoSend.append("nama_karyawan", formData.nama_karyawan);
-    formDatatoSend.append("email_karyawan", formData.email_karyawan);
-    formDatatoSend.append("notelp_karyawan", formData.notelp_karyawan);
 
-    KaryawanCreate(formDatatoSend).then((res) => {
+    KaryawanUpdate(param.id, formData).then((res) => {
       if (res.success) {
-        toast.success("Karyawan berhasil ditambahkan", {
+        toast.success("Karyawan berhasil diupdate", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -45,7 +52,7 @@ const CreateKaryawan = () => {
         }, 2000);
         handleClearForm();
       } else {
-        toast.error("Karyawan gagal ditambahkan", {
+        toast.error("Karyawan gagal diupdate", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -57,7 +64,6 @@ const CreateKaryawan = () => {
         });
       }
     });
-    console.log(formData);
   };
 
   // handleclear form
@@ -71,7 +77,7 @@ const CreateKaryawan = () => {
 
   return (
     <div className="w-full relative">
-      <h1 className="text-2xl font-bold">Tambah Karyawan</h1>
+      <h1 className="text-2xl font-bold">Edit Karyawan</h1>
       <form
         onSubmit={(e) => {
           handleSubmit(e);
@@ -145,4 +151,4 @@ const CreateKaryawan = () => {
   );
 };
 
-export default CreateKaryawan;
+export default editKaryawan;

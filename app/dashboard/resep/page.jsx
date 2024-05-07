@@ -1,143 +1,205 @@
 "use client";
-import React from 'react'
+import { useRouter } from "next/navigation";
+import { FaPlus } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+import { GetResep, ResepDelete, searchResep } from "../../api/apiResep";
 
-const Produk = () => {
-    return (
+const Resep = () => {
+  const router = useRouter();
+  const [resep, setResep] = useState([]);
+  const [resepSearch, setResepSearch] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [isfound, setIsfound] = useState(false);
+
+  const fetchData = () => {
+    GetResep()
+      .then((res) => {
+        setResep(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleInputSearch = async (e) => {
+    const searchValue = e.target.value.trim();
+    setIsfound(true);
+    if (searchValue === "") {
+      setResepSearch([]);
+      setIsfound(false);
+      setSearch(false);
+      return;
+    }
+
+    searchResep(searchValue)
+      .then((res) => {
+        if (res.length > 0) {
+          setResepSearch(res);
+          setIsfound(true);
+          setSearch(true);
+        } else {
+          setIsfound(false);
+          setSearch(true);
+          setResepSearch([]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
+  };
+
+  const handleClearSearch = () => {
+    document.getElementById("search").value = "";
+    setSearch(false);
+    setResepSearch([]);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleDelete = (id) => {
+    ResepDelete(id)
+      .then(() => {
+        fetchData();
+        toast.success("Resep Berhasil Dihapus", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        // delete resep from search by id
+        const newResepSearch = resepSearch.filter((item) => item.id !== id);
+        setResepSearch(newResepSearch);
+      })
+      .catch((error) => {
+        console.error("Error deleting resep:", error);
+      });
+  };
+  return (
+    <div className="relative">
+      <ToastContainer />
+      <div className="flex justify-between">
+        <h1 className="text-3xl mt-0 x  font-bold">Resep</h1>
         <div>
-            <h1 className='text-3xl mt-0 x  font-bold'>Resep</h1>
-            <button className='bg-green-500 p-2 rounded-lg mt-2 mb-4'>
-                Tambah Resep
-            </button>
-            <div className='grid grid-cols-3 gap-3'>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img className="rounded-t-lg" src="https://placehold.co/400x200" alt="" />
-                    </a>
-                    <div className="p-5">
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                        <div className="flex justify-normal">
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                                Hapus Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Edit Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-                    </a>
-                    <div className="p-5">
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                        <div className="flex justify-normal">
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                                Hapus Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Edit Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-                    </a>
-                    <div className="p-5">
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                        <div className="flex justify-normal">
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                                Hapus Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Edit Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-                    </a>
-                    <div className="p-5">
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                        <div className="flex justify-normal">
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                                Hapus Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Edit Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
-                    </a>
-                    <div className="p-5">
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                        <div className="flex justify-normal">
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2">
-                                Hapus Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                            <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Edit Resep
-                                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          <input
+            onChange={handleInputSearch}
+            type="text"
+            name="search"
+            id="search"
+            className="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <button
+            onClick={handleClearSearch}
+            className="bg-blue-500 text-white h-10 px-4 rounded-lg ml-2"
+          >
+            Clear
+          </button>
         </div>
-    )
-}
+      </div>
+      <button
+        onClick={() => router.push("/dashboard/resep/create")}
+        className="bg-green-500 p-2 rounded-lg mt-2 mb-4 flex items-center"
+      >
+        Tambah Resep <FaPlus className="ml-2" />
+      </button>
+      <div style={{ display: search ? "block" : "none" }}>
+        <h1 className="text-xl font-bold pt-10 pb-2">Hasil Pencarian</h1>
+        <div className="h-0.5 bg-white"></div>
+        <h1
+          style={{ display: isfound ? "none" : "block" }}
+          className="py-5 text-red-600"
+        >
+          Resep Tidak Ditemukan !
+        </h1>
+        <div className="grid grid-cols-3 gap-7 pt-5">
+          {resepSearch.map((item, index) => (
+            <div
+              key={index}
+              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-72"
+            >
+              <div className="p-5">
+                <a href="#">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    takaran : {item.takaran}
+                  </h5>
+                </a>
+                <div className="flex justify-end gap-x-2">
+                  <div
+                    onClick={() => router.push(`/dashboard/resep/${item.id}`)}
+                    className="p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    <FaPencilAlt className="text-white" />
+                  </div>
+                  <div
+                    onClick={() => handleDelete(item.id)}
+                    className=" p-2 rounded-lg bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                  >
+                    <FaTrash className="text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <h1 className="text-xl font-bold pt-10 pb-2">Semua Resep</h1>
+      <div className="h-0.5 bg-white"></div>
+      <div className="grid grid-cols-3 gap-7 pt-5">
+        {resep.map((item, index) => (
+          <div
+            key={index}
+            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-72"
+          >
+            <div className="w-full h-52 overflow-hidden">
+              <Image
+                className="rounded-t-lg"
+                loader={imageLoader}
+                src={item.image}
+                alt="test"
+                width={500}
+                height={500}
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              />
+            </div>
+            <div className="p-5">
+              <a href="#">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  takaran : {item.takaran}
+                </h5>
+              </a>
+              <div className="flex justify-end gap-x-2">
+                <div
+                  onClick={() =>
+                    router.push(`/dashboard/resep/${item.id_resep}`)
+                  }
+                  className="p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <FaPencilAlt className="text-white" />
+                </div>
+                <div
+                  onClick={() => handleDelete(item.id_resep)}
+                  className=" p-2 rounded-lg bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                >
+                  <FaTrash className="text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default Produk
+export default Resep;

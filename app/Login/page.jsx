@@ -35,11 +35,16 @@ export default function LoginPage() {
       localStorage.setItem("abilities", res.abilities);
     });
   };
+  
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       if (localStorage.getItem("abilities") === "ADMIN") {
         router.push("/dashboard");
+      } else if (localStorage.getItem("abilities") === "MO") {
+        router.push("/MO");
+      } else if (localStorage.getItem("abilities") === "OWNER") {
+        router.push("/owner");
       }
     }
   });

@@ -11,14 +11,12 @@ export default function Page() {
     e.preventDefault();
 
     if (!email.trim() || !password.trim()) {
-      setError("Email and password cannot be empty.");
+      setError("Password cannot be empty.");
       return;
     }
 
-    console.log("Email:", email);
     console.log("Password:", password);
     
-    setEmail("");
     setPassword("");
     setError("");
   };
@@ -35,10 +33,10 @@ export default function Page() {
           <form onSubmit={handleSubmit}>
             <div className="flex justify-center mt-5">
               <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Enter your new password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="bg-[#AD773D] placeholder-slate-950 text-black py-2 px-4 rounded-full w-full md:w-[23rem] flex justify-between items-center"
               />
             </div>

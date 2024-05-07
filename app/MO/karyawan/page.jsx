@@ -1,59 +1,173 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
-import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { GetProduk } from "../../api/apiProduk";
+import { GetKaryawan, KaryawanDelete, searchKaryawan } from "../../api/apiKaryawan";
 
-const Produk = () => {
-  const [produk, setProduk] = useState([]);
-
-  const imageLoader = ({ src, width, quality }) => {
-    return `http://127.0.0.1:8000/storage/produk/${src}?w=${width}&q=${
-      quality || 75
-    }`;
-  };
+const Karyawan = () => {
+  const router = useRouter();
+  const [karyawan, setKaryawan] = useState([]);
+  const [karyawanSearch, setKaryawanSearch] = useState([]);
+  const [search, setSearch] = useState(false);
+  const [isfound, setIsfound] = useState(false);
 
   const fetchData = () => {
-    GetProduk()
+    GetKaryawan()
       .then((res) => {
-        setProduk(res);
+        setKaryawan(res);
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const handleInputSearch = async (e) => {
+    const searchValue = e.target.value.trim();
+    setIsfound(true);
+    if (searchValue === "") {
+      setKaryawanSearch([]);
+      setIsfound(false);
+      setSearch(false);
+      return;
+    }
+
+    searchKaryawan(searchValue)
+      .then((res) => {
+        if (res.length > 0) {
+          setKaryawanSearch(res);
+          setIsfound(true);
+          setSearch(true);
+        } else {
+          setIsfound(false);
+          setSearch(true);
+          setKaryawanSearch([]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
+  };
+
+  const handleClearSearch = () => {
+    document.getElementById("search").value = "";
+    setSearch(false);
+    setKaryawanSearch([]);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleDelete = (id) => {
+    KaryawanDelete(id)
+      .then(() => {
+        fetchData();
+        toast.success("Karyawan Berhasil Dihapus", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+
+        // delete karyawan from search by id
+        const newKaryawanSearch = karyawanSearch.filter((item) => item.id !== id);
+        setKaryawanSearch(newKaryawanSearch);
+      })
+      .catch((error) => {
+        console.error("Error deleting karyawan:", error);
+      });
+  };
   return (
-    <div>
-      <h1 className="text-3xl mt-0 x  font-bold">Jabatan</h1>
-      <Link href="/MO/karyawan/create">
-        <button className="bg-green-500 p-2 rounded-lg mt-2 mb-4 flex items-center">
-          Tambah Jabatan <FaPlus className="ml-2" />
-        </button>
-      </Link>
-      <div className="grid grid-cols-3 gap-7">
-        {produk.map((item, index) => (
+    <div className="relative">
+      <ToastContainer />
+      <div className="flex justify-between">
+        <h1 className="text-3xl mt-0 x  font-bold">Karyawan</h1>
+        <div>
+          <input
+            onChange={handleInputSearch}
+            type="text"
+            name="search"
+            id="search"
+            className="h-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+          <button
+            onClick={handleClearSearch}
+            className="bg-blue-500 text-white h-10 px-4 rounded-lg ml-2"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+      <button
+        onClick={() => router.push("/MO/karyawan/create")}
+        className="bg-green-500 p-2 rounded-lg mt-2 mb-4 flex items-center"
+      >
+        Tambah Karyawan <FaPlus className="ml-2" />
+      </button>
+      <div style={{ display: search ? "block" : "none" }}>
+        <h1 className="text-xl font-bold pt-10 pb-2">Hasil Pencarian</h1>
+        <div className="h-0.5 bg-white"></div>
+        <h1
+          style={{ display: isfound ? "none" : "block" }}
+          className="py-5 text-red-600"
+        >
+          Karyawan Tidak Ditemukan !
+        </h1>
+        <div className="grid grid-cols-3 gap-7 pt-5">
+          {karyawanSearch.map((item, index) => (
+            <div
+              key={index}
+              className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-72"
+            >
+              <div className="p-5">
+                <a href="#">
+                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {item.nama_karyawan}
+                  </h5>
+                </a>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  email : {item.email_karyawan}
+                </p>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  nomor telepon : {item.notelp_karyawan}
+                </p>
+                <div className="flex justify-end gap-x-2">
+                  <div
+                    onClick={() => router.push(`/MO/karyawan/${item.id}`)}
+                    className="p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    <FaPencilAlt className="text-white" />
+                  </div>
+                  <div
+                    onClick={() => handleDelete(item.id)}
+                    className=" p-2 rounded-lg bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                  >
+                    <FaTrash className="text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <h1 className="text-xl font-bold pt-10 pb-2">Semua Karyawan</h1>
+      <div className="h-0.5 bg-white"></div>
+      <div className="grid grid-cols-3 gap-7 pt-5">
+        {karyawan.map((item, index) => (
           <div
             key={index}
-            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-[15rem]"
+            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 w-72"
           >
-            <div className="w-full h-52 overflow-hidden">
-              <Image
-                className="rounded-t-lg"
-                loader={imageLoader}
-                src={item.image}
-                alt="test"
-                width={500}
-                height={500}
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              />
-            </div>
             <div className="p-5">
               <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -61,22 +175,27 @@ const Produk = () => {
                 </h5>
               </a>
               <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                {item.email_karyawan}
+                email : {item.email_karyawan}
               </p>
-              <a
-                href="#"
-                className="inline-flex items-center p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2"
-                style={{ marginLeft: "60%" }}
-              >
-                <FaTrash className="text-white" />
-              </a>
-
-              <a
-                href="#"
-                className="inline-flex items-center p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                <FaPencilAlt className="text-white" />
-              </a>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                nomor telepon : {item.notelp_karyawan}
+              </p>
+              <div className="flex justify-end gap-x-2">
+                <div
+                  onClick={() =>
+                    router.push(`/MO/karyawan/${item.id_karyawan}`)
+                  }
+                  className="p-2 rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <FaPencilAlt className="text-white" />
+                </div>
+                <div
+                  onClick={() => handleDelete(item.id_karyawan)}
+                  className=" p-2 rounded-lg bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                >
+                  <FaTrash className="text-white" />
+                </div>
+              </div>
             </div>
           </div>
         ))}
@@ -85,4 +204,4 @@ const Produk = () => {
   );
 };
 
-export default Produk;
+export default Karyawan;

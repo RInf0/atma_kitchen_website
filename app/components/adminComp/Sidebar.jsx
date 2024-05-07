@@ -18,7 +18,7 @@ const Sidebar = () => {
       console.log(res);
       localStorage.removeItem("token");
       localStorage.removeItem("abilities");
-      router.push("/");
+      router.push("/Login");
     });
   };
   return (
